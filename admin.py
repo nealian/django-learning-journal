@@ -3,7 +3,7 @@ from journal.models import Entry, Tag
 
 class TagInline(admin.TabularInline):
     model = Tag
-    extra = 1
+#    extra = 1
 
 class EntryAdmin(admin.ModelAdmin):
     fieldsets = [
