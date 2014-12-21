@@ -5,6 +5,10 @@ class TagInline(admin.TabularInline):
     model = Tag.entries.through
     extra = 0
 
+class TagAdmin(admin.ModelAdmin):
+    inlines = [TagInline]
+    exclude = ('entries',)
+
 class EntryAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Entry fields',     {'fields': ['title','contents']}),
@@ -13,4 +17,4 @@ class EntryAdmin(admin.ModelAdmin):
     inlines = [TagInline]
 
 admin.site.register(Entry, EntryAdmin)
-
+admin.site.register(Tag, TagAdmin)
