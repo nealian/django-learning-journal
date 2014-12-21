@@ -6,7 +6,9 @@ class TagInline(admin.TabularInline):
     extra = 0
 
 class TagAdmin(admin.ModelAdmin):
-    inlines = [TagInline]
+    inlines = [
+        TagInline,
+    ]
     exclude = ('entries',)
 
 class EntryAdmin(admin.ModelAdmin):
@@ -14,7 +16,9 @@ class EntryAdmin(admin.ModelAdmin):
         ('Entry fields',     {'fields': ['title','contents']}),
         ('Date information', {'fields': ['pub_date','mod_date'], 'classes': ['collapse']}),
     ]
-    inlines = [TagInline]
+    inlines = [
+        TagInline,
+    ]
 
 admin.site.register(Entry, EntryAdmin)
 admin.site.register(Tag, TagAdmin)
