@@ -19,6 +19,10 @@ class EntryAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
+    list_display = ('title', 'pub_date', 'mod_date')
+    list_filter = ['pub_date', 'mod_date']
+    search_fields = ['title']
+    date_hierarchy = 'pub_date'
 
 admin.site.register(Entry, EntryAdmin)
 admin.site.register(Tag, TagAdmin)
