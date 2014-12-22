@@ -1,0 +1,13 @@
+<h1>{{ entry.title }}</h1>
+{{ entry.contents|safe }}
+
+<h5>Tags</h5>
+{% spaceless %}
+  <p>
+  {% for tag in entry.tag_set.all %}
+    <a href="{% url journal.views.tag_detail tag_id=tag.id %}">{{tag.name}}</a>{% include "comma.html" %}
+  {% empty %}
+    None!
+  {% endfor %}
+{% endspaceless %}
+</p>

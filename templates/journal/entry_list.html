@@ -1,0 +1,16 @@
+<h1>
+{% if tag %}
+  Latest entries tagged with <em>{{ tag.name }}</em>
+{% else %}
+  Latest entries
+{% endif %}
+</h1>
+{% if latest_entries  %}
+  <ul>
+  {% for entry in latest_entries %}
+    <li><a href="{% url journal.views.entry_detail entry_id=entry.id %}">{{ entry.title }}</a></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No entries are available.</p>
+{% endif %}
