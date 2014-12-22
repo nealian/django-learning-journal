@@ -1,4 +1,4 @@
-from journal import urls
+from journal import urls as journal_urls
 
 def urls(self):
-    return urls.journal_urlpatterns
+    return journal_urls.journal_urlpatterns
