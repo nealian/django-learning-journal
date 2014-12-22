@@ -9,9 +9,3 @@ def index(request):
 def entry_detail(request, entry_id):
     entry = get_object_or_404(Entry, pk=entry_id)
     return render_to_response('journal/entry_detail.html', {'entry': entry})
-
-def error_404(request):
-    return render_to_response('404.html', {'request': request})
-
-def error_500(request):
-    return render_to_response('500.html', {'request': request})
