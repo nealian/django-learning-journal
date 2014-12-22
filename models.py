@@ -13,6 +13,8 @@ class Entry(models.Model):
     should_be_published.short_description = 'Publish time?'
     def __unicode__(self):
         return self.title
+    class Meta:
+        verbose_name_plural = 'entries'
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)
