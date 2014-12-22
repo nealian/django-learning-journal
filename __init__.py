@@ -1,4 +1,4 @@
 from journal import urls
 
 def urls(self):
-    return urls.urlpatterns
+    return urls.journal_urlpatterns
