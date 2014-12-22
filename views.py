@@ -13,5 +13,5 @@ def entry_detail(request, entry_id):
 def error_404(request):
     return render_to_response('404.html', {'request': request})
 
-def error_500(request)
+def error_500(request):
     return render_to_response('500.html', {'request': request})
