@@ -1,0 +1,10 @@
+<div id="welcome">
+  <h1><a href="{{ url journal.views.index }}">{{ site_name }}</a></h1>
+</div><!-- welcome -->
+<div id="menu_items">
+  <ul id="menu">
+  {% for section in site_sections %}
+    <li{% ifequal section.name current_site_section %} class="current"{% endifequal %}><a href="{{ section.url }}">{{ section.name }}</a></li>
+  {% endfor %}
+  </ul>
+</div><!-- menu_items -->

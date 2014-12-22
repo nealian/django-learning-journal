@@ -1,0 +1,12 @@
+<div id="content_blue">
+  {% for blurb in blurbs %}
+    <div class="content_blue_container_box{% if forloop.last %}l{% endif %}">
+      <h4>{{ blurb.h4 }}</h4>
+      <p>{{ blurb.contents }}</p>
+      <div class="readmore">
+        <a href="{{ blurb.url }}">Read more</a>
+      </div><!-- readmore -->
+    </div><!-- content_blue_container{% if forloop.last %}l{% endif %} -->
+  {% endfor %}
+  <br style="clear:both" />
+</div><!-- content_blue -->

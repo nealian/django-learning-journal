@@ -1,13 +1,25 @@
-<h1>{{ entry.title }}</h1>
-{{ entry.contents|safe }}
+{% extends "journal/base.html"}
 
-<h5>Tags</h5>
-{% spaceless %}
-  <p>
-  {% for tag in entry.tag_set.all %}
-    <a href="{% url journal.views.tag_detail tag_id=tag.id %}">{{tag.name}}</a>{% include "comma.html" %}
-  {% empty %}
-    None!
-  {% endfor %}
-{% endspaceless %}
-</p>
+{% block page_title %}
+  {{ entry.title }} | {{ site_name|default:"Journal"}}
+{% endblock page_title %}
+
+{% block content_header %}
+  {{ entry.title }}
+{% endblock content_header %}
+
+{% block contents %}
+  {{ entry.contents|safe }}
+
+  <hl \>
+  <h3>Tags</h3>
+  {% spaceless %}
+    <p>
+    {% for tag in entry.tag_set.all %}
+      <a href="{% url journal.views.tag_detail tag_id=tag.id %}">{{tag.name}}</a>{% include "comma.html" %}
+    {% empty %}
+      None!
+    {% endfor %}
+  {% endspaceless %}
+  </p>
+{% endblock contents %}
