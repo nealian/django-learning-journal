@@ -8,7 +8,7 @@
   {{ entry.title }}
 {% endblock content_header %}
 
-{% block contents %}
+{% block content %}
   <p>{{ entry.contents|safe }}</p>
 
   <h3>Tags</h3>
@@ -21,4 +21,4 @@
     {% endfor %}
   {% endspaceless %}
   </p>
-{% endblock contents %}
+{% endblock content %}
