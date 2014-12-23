@@ -327,8 +327,8 @@ ul#menu li.current a, ul#menu li:hover a
   
 #banner_image {
 	width: 800px;
-	height: 225px;
-	float: left;
+	height: 250px;
+	float: center;
 	margin: 20px 0 0 0;
 	padding: 0 0 0 0;
 }
