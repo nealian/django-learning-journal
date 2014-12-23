@@ -22,3 +22,9 @@
   {% endspaceless %}
   </p>
 {% endblock content %}
+
+{% block sidebar_content %}
+  {% for sidebar_item in sidebar_contents %}
+    {% include "journal/sidebar_item.html" %}
+  {% endfor %}
+{% endblock sidebar_content %}
