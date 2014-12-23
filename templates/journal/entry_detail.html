@@ -9,9 +9,8 @@
 {% endblock content_header %}
 
 {% block contents %}
-  {{ entry.contents|safe }}
+  <p>{{ entry.contents|safe }}</p>
 
-  <hl \>
   <h3>Tags</h3>
   {% spaceless %}
     <p>
