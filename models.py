@@ -6,11 +6,7 @@ class Entry(models.Model):
     mod_date = models.DateTimeField('date modified')
     title = models.CharField(max_length=200)
     contents = models.TextField()
-    def should_be_published(self):
-        return self.pub_date <= timezone.now()
-    should_be_published.admin_order_field = 'pub_date'
-    should_be_published.boolean = True
-    should_be_published.short_description = 'Publish time?'
+    public = models.BooleanField()
     def __unicode__(self):
         return self.title
     class Meta:

@@ -21,7 +21,7 @@ test_sidebar_contents = [
 
 def index(request):
     current_site = Site.objects.get_current()
-    latest_entries = Entry.objects.all().order_by('-pub_date')[:5]
+    latest_entries = Entry.objects.filter(public=True).order_by('-pub_date')[:5]
     return render_to_response('journal/entry_list.html',
     {
         'site_name': current_site.name,
@@ -42,7 +42,7 @@ def entry_detail(request, entry_id):
 def tag_detail(request, tag_id):
     current_site = Site.objects.get_current()
     tag = get_object_or_404(Tag, pk=tag_id)
-    latest_entries_for_tag = tag.entries.all().order_by('-pub_date')[:25]
+    latest_entries_for_tag = tag.entries.filter(public=True).order_by('-pub_date')[:25]
     return render_to_response('journal/entry_list.html',
     {
         'site_name': current_site.name,
