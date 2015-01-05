@@ -20,7 +20,7 @@
   {% if latest_entries  %}
     <ul>
     {% for entry in latest_entries %}
-      <li><a href="{% url journal.views.entry_detail entry_id=entry.id %}">{{ entry.title }}</a></li>
+      <li><a href="{% url 'journal-entry' entry_id=entry.id %}">{{ entry.title }}</a></li>
     {% endfor %}
     </ul>
   {% else %}
