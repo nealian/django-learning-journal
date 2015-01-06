@@ -6,7 +6,7 @@ class Entry(models.Model):
     mod_date = models.DateTimeField('date modified')
     title = models.CharField(max_length=200)
     contents = models.TextField()
-    public = models.BooleanField()
+    public = models.BooleanField(default=False)
     def __unicode__(self):
         return self.title
     class Meta:
