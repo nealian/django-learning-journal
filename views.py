@@ -26,7 +26,7 @@ common_params = {
 
 def index(request):
     latest_entries = Entry.objects.filter(public=True).order_by('-pub_date')[:5]
-    return render(response, 'journal/entry_list.html', 
+    return render(request, 'journal/entry_list.html', 
                   dict(common_params.items() + {
                       'latest_entries': latest_entries,
                   }.items()))
@@ -38,7 +38,7 @@ def entry_detail(request, entry_id):
             raise Http404
     except Entry.DoesNotExist:
         raise Http404
-    return render(response, 'journal/entry_detail.html',
+    return render(request, 'journal/entry_detail.html',
                   dict(common_params.items() + {
                       'entry': entry,
                   }.items()))
@@ -46,7 +46,7 @@ def entry_detail(request, entry_id):
 def tag_detail(request, tag_id):
     tag = get_object_or_404(Tag, pk=tag_id)
     latest_entries_for_tag = tag.entries.filter(public=True).order_by('-pub_date')[:25]
-    return render(response, 'journal/entry_list.html',
+    return render(request, 'journal/entry_list.html',
                   dict(common_params.items() + {
                       'tag': tag,
                       'latest_entries': latest_entries_for_tag,
