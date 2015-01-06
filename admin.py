@@ -13,8 +13,8 @@ class TagAdmin(admin.ModelAdmin):
 
 class EntryAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Entry fields',     {'fields': ['title','contents']}),
-        ('Date information', {'fields': ['pub_date','mod_date'], 'classes': ['collapse']}),
+        ('Entry fields', {'fields': ['title','contents']}),
+        ('Publishing',   {'fields': ['public']}),
     ]
     inlines = [
         TagInline,

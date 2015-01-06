@@ -2,8 +2,8 @@ from django.db import models
 from django.utils import timezone
 
 class Entry(models.Model):
-    pub_date = models.DateTimeField('date published')
-    mod_date = models.DateTimeField('date modified')
+    pub_date = models.DateTimeField('date published', auto_now_add=True)
+    mod_date = models.DateTimeField('date modified', auto_now=True)
     title = models.CharField(max_length=200)
     contents = models.TextField()
     public = models.BooleanField(default=False)
