@@ -33,7 +33,7 @@ def index(request):
 
 def entry_detail(request, entry_id):
     try:
-        entry = Entry.objects.get(pk=endry_id)
+        entry = Entry.objects.get(pk=entry_id)
         if not entry.public:
             raise Http404
     except Entry.DoesNotExist:
