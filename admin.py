@@ -3,7 +3,7 @@ from journal.models import Entry, Tag
 
 class TagInline(admin.TabularInline):
     model = Tag.entries.through
-    extra = 0
+    extra = 1
 
 class TagAdmin(admin.ModelAdmin):
     inlines = [
