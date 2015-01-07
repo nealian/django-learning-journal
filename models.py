@@ -8,8 +8,8 @@ class Entry(models.Model):
     title = models.CharField(max_length=200)
     contents = models.TextField()
     public = models.BooleanField(default=False)
-    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-    modifier = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='entries_authored')
+    modifier = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='entries_modified')
     def __unicode__(self):
         return self.title
     class Meta:
