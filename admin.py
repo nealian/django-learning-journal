@@ -19,7 +19,7 @@ class EntryAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
-    list_display = ('title', 'pub_date', 'mod_date', 'public')
+    list_display = ('title', 'author', 'pub_date', 'modifier', 'mod_date', 'public')
     list_filter = ['pub_date', 'mod_date']
     search_fields = ['title']
     date_hierarchy = 'pub_date'
