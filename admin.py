@@ -24,5 +24,13 @@ class EntryAdmin(admin.ModelAdmin):
     search_fields = ['title']
     date_hierarchy = 'pub_date'
 
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'author', None) is None:
+            obj.author = request.user
+            obj.modifier = request.user
+        else if change:
+            obj.modifier = request.user
+        obj.save()
+
 admin.site.register(Entry, EntryAdmin)
 admin.site.register(Tag, TagAdmin)
