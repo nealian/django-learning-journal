@@ -16,7 +16,7 @@ class Entry(models.Model):
         verbose_name_plural = 'entries'
         verbose_name = 'entry'
         permissions = (
-            ("view_private", "Can view entries that haven't been marked as public"),
+            ("view_private", "Can view entries not marked as public"),
         )
 
 class Tag(models.Model):
