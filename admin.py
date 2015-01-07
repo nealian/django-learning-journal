@@ -28,7 +28,7 @@ class EntryAdmin(admin.ModelAdmin):
         if getattr(obj, 'author', None) is None:
             obj.author = request.user
             obj.modifier = request.user
-        else if change:
+        elif change:
             obj.modifier = request.user
         obj.save()
 
