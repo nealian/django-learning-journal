@@ -11,6 +11,14 @@ class TagAdmin(admin.ModelAdmin):
     ]
     exclude = ('entries',)
 
+def entry_publish(modeladmin, request, queryset):
+    queryset.update(public=True)
+entry_publish.short_description = "Publish selected entries"
+
+def entry_unpublish(modeladmin, request, queryset):
+    queryset.update(public=False)
+entry_unpublish.short_description = "Unpublish selected entries"
+
 class EntryAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Entry fields', {'fields': ['title','contents']}),
@@ -23,6 +31,7 @@ class EntryAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'mod_date']
     search_fields = ['title']
     date_hierarchy = 'pub_date'
+    actions = [entry_publish, entry_unpublish]
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'author', None) is None:
