@@ -17,6 +17,7 @@ class Entry(models.Model):
         verbose_name = 'entry'
         permissions = (
             ("view_private", "Can view entries not marked as public"),
+            ("edit_others", "Can edit entries authored by other users"),
         )
 
 class Tag(models.Model):

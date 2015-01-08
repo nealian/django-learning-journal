@@ -32,5 +32,22 @@ class EntryAdmin(admin.ModelAdmin):
             obj.modifier = request.user
         obj.save()
 
+    def queryset(self, request):
+        qs = super(EntryAdmin, self).queryset(request)
+        if request.user.has_perm('entry.edit_others'):
+            return qs
+        else:
+            return qs.filter(author=request.user)
+
+    def has_change_permission(self, request, obj=None):
+        if not obj:
+            return True
+        if request.user.has_perm('entry.edit_others') or obj.author == request.user:
+            return True
+        else:
+            return False
+
+    has_delete_permission = has_change_permission
+
 admin.site.register(Entry, EntryAdmin)
 admin.site.register(Tag, TagAdmin)
