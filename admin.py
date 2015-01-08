@@ -34,7 +34,7 @@ class EntryAdmin(admin.ModelAdmin):
 
     def queryset(self, request):
         qs = super(EntryAdmin, self).queryset(request)
-        if request.user.has_perm('entry.edit_others'):
+        if request.user.has_perm('journal.entry_edit_others'):
             return qs
         else:
             return qs.filter(author=request.user)
@@ -42,7 +42,7 @@ class EntryAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         if not obj:
             return True
-        if request.user.has_perm('entry.edit_others') or obj.author == request.user:
+        if request.user.has_perm('journal.entry_edit_others') or obj.author == request.user:
             return True
         else:
             return False

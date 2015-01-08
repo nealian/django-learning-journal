@@ -14,10 +14,9 @@ class Entry(models.Model):
         return self.title
     class Meta:
         verbose_name_plural = 'entries'
-        verbose_name = 'entry'
         permissions = (
-            ("view_private", "Can view entries not marked as public"),
-            ("edit_others", "Can edit entries authored by other users"),
+            ("entry_view_private", "Can view private entries"),
+            ("entry_edit_others", "Can edit entries by others"),
         )
 
 class Tag(models.Model):
