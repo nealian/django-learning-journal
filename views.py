@@ -25,7 +25,10 @@ common_params = {
 }
 
 def index(request):
-    latest_entries = Entry.objects.filter(public=True).order_by('-pub_date')[:5]
+    if request.user.has_perm("journal.entry.view_private"):
+        latest_entries = Entry.objects.filter(public=True).order_by('-pub_date')[:5]
+    else:
+        latest_entries = Entry.objects.order_by('-pub_date')[:5]
     return render(request, 'journal/entry_list.html', 
                   dict(common_params.items() + {
                       'latest_entries': latest_entries,
@@ -35,7 +38,8 @@ def entry_detail(request, entry_id):
     try:
         entry = Entry.objects.get(pk=entry_id)
         if not entry.public:
-            raise Http404
+            if not request.user.has_perm("journal.entry.view_private"):
+                raise Http404
     except Entry.DoesNotExist:
         raise Http404
     return render(request, 'journal/entry_detail.html',
@@ -45,7 +49,10 @@ def entry_detail(request, entry_id):
 
 def tag_detail(request, tag_id):
     tag = get_object_or_404(Tag, pk=tag_id)
-    latest_entries_for_tag = tag.entries.filter(public=True).order_by('-pub_date')[:25]
+    if request.user.has_perm("journal.entry.view_private"):
+        latest_entries_for_tag = tag.entries.filter(public=True).order_by('-pub_date')[:25]
+    else:
+        latest_entries_for_tag = tag.entries.order_by('-pub_date')[:25]
     return render(request, 'journal/entry_list.html',
                   dict(common_params.items() + {
                       'tag': tag,
