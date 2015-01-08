@@ -37,9 +37,8 @@ def index(request):
 def entry_detail(request, entry_id):
     try:
         entry = Entry.objects.get(pk=entry_id)
-        if not entry.public:
-            if not request.user.has_perm("journal.entry.view_private"):
-                raise Http404
+        if not entry.public and not request.user.has_perm("journal.entry.view_private"):
+            raise Http404
     except Entry.DoesNotExist:
         raise Http404
     return render(request, 'journal/entry_detail.html',
