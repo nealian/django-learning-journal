@@ -20,17 +20,16 @@ class EntryAdmin(admin.ModelAdmin):
     search_fields = ['title']
     date_hierarchy = 'pub_date'
     actions = ['entry_publish', 'entry_unpublish']
-    readonly_fields = ('pub_date', 'mod_date',)
     fieldsets = (
-        (None,              {'fields': ['title','contents']}),
-        ('Important dates', {'fields': ['pub_date', 'mod_date']}),
+        (None,              {'fields': ('title','contents')}),
+        ('Important dates', {'fields': ('pub_date', 'mod_date'), 'classes': ('collapse')}),
     )
-
+    readonly_fields = ('pub_date', 'mod_date',)
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = super(EntryAdmin, self).get_fieldsets(request, obj)
         if request.user.has_perm('journal.entry_publish'):
-            fieldsets += (('Publishing', {'fields': ['public']}),)
+            fieldsets += (('Publishing', {'fields': ('public')}),)
         return fieldsets
  
     def get_actions(self, request):
