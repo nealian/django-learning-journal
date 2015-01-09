@@ -41,13 +41,13 @@ class EntryAdmin(admin.ModelAdmin):
 
     def entry_publish(self, request, queryset):
         rows_updated = queryset.update(public=True)
-        message_bit = '1 entry was' if rows_updated == 1 else "%s stories were" % rows_updated
+        message_bit = '1 entry was' if rows_updated == 1 else "%s entries were" % rows_updated
         self.message_user(request, "%s successfully marked public." % message_bit)
     entry_publish.short_description = "Publish selected entries"
 
     def entry_unpublish(self, request, queryset):
         rows_updated = queryset.update(public=False)
-        message_bit = '1 entry was' if rows_updated == 1 else "%s stories were" % rows_updated
+        message_bit = '1 entry was' if rows_updated == 1 else "%s entries were" % rows_updated
         self.message_user(request, "%s successfully unmarked public." % message_bit)
     entry_unpublish.short_description = "Unpublish selected entries"
 
