@@ -14,7 +14,6 @@ class TagAdmin(admin.ModelAdmin):
 class EntryAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Entry fields', {'fields': ['title','contents']}),
-        ('Publishing',   {'fields': ['public']}),
     ]
     inlines = [
         TagInline,
@@ -27,10 +26,9 @@ class EntryAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         if request.user.has_perm('journal.entry_publish'):
-            if 'exclude' in kwargs:
-                kwargs['exclude'] += ['Publishing']
-            else:
-                kwargs['exclude'] = ['Publishing']
+            kwargs['fieldsets'] += [('Publishing',   {'fields': ['public']}),]
+        else:
+            kwargs['exclude'] = ['public']
         return super(EntryAdmin, self).get_form(request, obj, **kwargs)
  
     def get_actions(self, request):
