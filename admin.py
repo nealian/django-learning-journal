@@ -52,9 +52,12 @@ class EntryAdmin(admin.ModelAdmin):
     entry_publish.short_description = "Publish selected entries"
 
     def entry_unpublish(self, request, queryset):
-        rows_updated = queryset.update(public=False)
-        message_bit = '1 entry was' if rows_updated == 1 else "%s entries were" % rows_updated
-        self.message_user(request, "%s successfully unmarked public." % message_bit)
+        rows_updated = queryset.filter(public=True).update(public=False)
+        rows_untouched = queryset.count() - rows_updated
+        update_message_bit = '1 entry was' if rows_updated == 1 else "%s entries were" % rows_updated
+        untouched_message_bit = '1 selected entry was' if rows_untouched == 1 else "%s selected entries were" % rows_untouched
+        message = "{} successfully unpublished ({} already not published)".format(update_message_bit, untouched_message_bit) if rows_untouched else "{} successfully unpublished".format(update_message_bit)
+        self.message_user(request, message)
     entry_unpublish.short_description = "Unpublish selected entries"
 
     def save_model(self, request, obj, form, change):
