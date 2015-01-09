@@ -9,8 +9,12 @@
 {% endblock content_header %}
 
 {% block content %}
+  <h5>Written by {{ entry.author }}</h5>
+  <h5>Published {{ entry.pub_date|date:"SHORT_DATETIME_FORMAT" }}</h5>
   <p>{{ entry.contents|safe }}</p>
 
+  <br />
+  <h5>Last modified {{ entry.mod_date|date:"SHORT_DATETIME_FORMAT" }} by {{ entry.modifier }}</h5>
   <h3>Tags</h3>
   {% spaceless %}
     <p>

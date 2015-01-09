@@ -24,7 +24,9 @@
     </div><!-- menubar -->
 
     <div id="site_content">
-      {% include 'journal/banner.html' %}
+      {% if not nobanner %}
+        {% include 'journal/banner.html' %}
+      {% endif %}
 
       <div class="sidebar_container">
         {% block sidebar_content %}
