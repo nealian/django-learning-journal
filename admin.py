@@ -22,14 +22,15 @@ class EntryAdmin(admin.ModelAdmin):
     actions = ['entry_publish', 'entry_unpublish']
     readonly_fields = ('pub_date', 'mod_date',)
 
-    def get_form(self, request, obj=None, **kwargs):
-        kwargs['fieldsets'] = (
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super(EntryAdmin, self).get_fieldsets(request, obj)
+        fieldsets += (
             ('Entry fields',    {'fields': ['title','contents']}),
             ('Important dates', {'fields': ['pub_date', 'mod_date']}),
         )
         if request.user.has_perm('journal.entry_publish'):
-            kwargs['fieldsets'] += (('Publishing', {'fields': ['public']}),)
-        return super(EntryAdmin, self).get_form(request, obj, **kwargs)
+            fieldsets += (('Publishing', {'fields': ['public']}),)
+        return fieldsets
  
     def get_actions(self, request):
         actions = super(EntryAdmin, self).get_actions(request)
