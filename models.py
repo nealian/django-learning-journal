@@ -1,15 +1,16 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Entry(models.Model):
-    pub_date = models.DateTimeField('date published', auto_now_add=True)
+    create_date = models.DateTimeField('date initially created', auto_now_add=True)
+    pub_date = models.DateTimeField('date published', null=True, blank=True, default=None)
     mod_date = models.DateTimeField('date modified', auto_now=True)
     title = models.CharField(max_length=200)
     contents = models.TextField()
     public = models.BooleanField(default=False)
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='entries_authored')
     modifier = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='entries_modified')
+    publisher = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='entries_published')
     def __unicode__(self):
         return self.title
     class Meta:

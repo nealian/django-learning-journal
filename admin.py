@@ -1,9 +1,10 @@
 from django.contrib import admin
 from journal.models import Entry, Tag
+from django.utils import timezone
 
 class TagInline(admin.TabularInline):
     model = Tag.entries.through
-    extra = 1
+    extra = 0
 
 class TagAdmin(admin.ModelAdmin):
     inlines = [
@@ -16,13 +17,13 @@ class EntryAdmin(admin.ModelAdmin):
         TagInline,
     ]
     list_display = ('title', 'author', 'pub_date', 'modifier', 'mod_date', 'public')
-    list_filter = ('pub_date', 'mod_date')
-    search_fields = ['title']
+    list_filter = ('pub_date', 'mod_date',)
+    search_fields = ('title',)
     date_hierarchy = 'pub_date'
     actions = ('entry_publish', 'entry_unpublish')
     fieldsets = (
         (None,             {'fields': ('title','contents',)}),
-        ('Post meta-info', {'fields': (('pub_date', 'author',), ('mod_date', 'modifier',),), 'classes': ('collapse',)}),
+        ('Post meta-info', {'fields': (('create_date', 'mod_date', 'pub_date',), ('author', 'modifier', 'publisher',),), 'classes': ('collapse',)}),
     )
     readonly_fields = ('pub_date', 'mod_date', 'author', 'modifier',)
 
@@ -42,9 +43,12 @@ class EntryAdmin(admin.ModelAdmin):
         return actions
 
     def entry_publish(self, request, queryset):
-        rows_updated = queryset.update(public=True)
-        message_bit = '1 entry was' if rows_updated == 1 else "%s entries were" % rows_updated
-        self.message_user(request, "%s successfully marked public." % message_bit)
+        rows_updated = queryset.filter(public=False).update(public=True, pub_date=timezone.now(), publisher=request.user)
+        rows_untouched = queryset.count() - rows_updated
+        update_message_bit = '1 entry was' if rows_updated == 1 else "%s entries were" % rows_updated
+        untouched_message_bit = '1 selected entry was' if rows_untouched == 1 else "%s selected entries were" % rows_untouched
+        message = "{} successfully published ({} already published)".format(update_message_bit, untouched_message_bit) if rows_untouched else "{} successfully published".format(update_message_bit)
+        self.message_user(request, message)
     entry_publish.short_description = "Publish selected entries"
 
     def entry_unpublish(self, request, queryset):
