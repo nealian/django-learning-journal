@@ -11,14 +11,6 @@ class TagAdmin(admin.ModelAdmin):
     ]
     exclude = ('entries',)
 
-def entry_publish(modeladmin, request, queryset):
-    queryset.update(public=True)
-entry_publish.short_description = "Publish selected entries"
-
-def entry_unpublish(modeladmin, request, queryset):
-    queryset.update(public=False)
-entry_unpublish.short_description = "Unpublish selected entries"
-
 class EntryAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Entry fields', {'fields': ['title','contents']}),
@@ -31,7 +23,25 @@ class EntryAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'mod_date']
     search_fields = ['title']
     date_hierarchy = 'pub_date'
-    actions = [entry_publish, entry_unpublish]
+
+    def get_form(self, request, obj=None, **kwargs):
+        if request.user.has_perm('journal.entry_publish'):
+           kwargs['exclude'] += ['Publishing']
+        return super(admin.ModelAdmin, self).get_form(request, obj, **kwargs)
+ 
+    def get_actions(self, request):
+        actions = super(EntryAdmin, self).get_actions(request)
+        if request.user.has_perm('journal.entry_publish'):
+            actions += ['entry_publish', 'entry_unpublish']
+        return actions
+
+    def entry_publish(self, request, queryset):
+        queryset.update(public=True)
+    entry_publish.short_description = "Publish selected entries"
+
+    def entry_unpublish(self, request, queryset):
+        queryset.update(public=False)
+    entry_unpublish.short_description = "Unpublish selected entries"
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'author', None) is None:

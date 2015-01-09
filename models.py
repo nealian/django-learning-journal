@@ -17,6 +17,7 @@ class Entry(models.Model):
         permissions = (
             ("entry_view_private", "Can view private entries"),
             ("entry_edit_others", "Can edit entries by others"),
+            ("entry_publish", "Can publish and unpublish entries"),
         )
 
 class Tag(models.Model):
