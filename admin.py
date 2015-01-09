@@ -21,8 +21,8 @@ class EntryAdmin(admin.ModelAdmin):
     date_hierarchy = 'pub_date'
     actions = ('entry_publish', 'entry_unpublish')
     fieldsets = (
-        (None,              {'fields': ('title','contents',)}),
-        ('Important dates', {'fields': ('pub_date', 'mod_date',), 'classes': ('collapse',)}),
+        (None,             {'fields': ('title','contents',)}),
+        ('Post meta-info', {'fields': (('pub_date', 'author',), ('mod_date', 'modifier',),), 'classes': ('collapse',)}),
     )
     readonly_fields = ('pub_date', 'mod_date',)
 
