@@ -27,7 +27,10 @@ class EntryAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         if request.user.has_perm('journal.entry_publish'):
-           kwargs['exclude'] += ['Publishing']
+            if 'exclude' in kwargs:
+                kwargs['exclude'] += ['Publishing']
+            else:
+                kwargs['exclude'] = ['Publishing']
         return super(admin.ModelAdmin, self).get_form(request, obj, **kwargs)
  
     def get_actions(self, request):
