@@ -23,6 +23,7 @@ class EntryAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'mod_date']
     search_fields = ['title']
     date_hierarchy = 'pub_date'
+    actions = ['entry_publish', 'entry_unpublish']
 
     def get_form(self, request, obj=None, **kwargs):
         if request.user.has_perm('journal.entry_publish'):
@@ -31,8 +32,11 @@ class EntryAdmin(admin.ModelAdmin):
  
     def get_actions(self, request):
         actions = super(EntryAdmin, self).get_actions(request)
-        if request.user.has_perm('journal.entry_publish'):
-            actions += ['entry_publish', 'entry_unpublish']
+        if not request.user.has_perm('journal.entry_publish'):
+            if 'entry_publish' in actions:
+                del actions['entry_publish']
+            if 'entry_unpublish' in actions:
+                del actions['entry_unpublish']
         return actions
 
     def entry_publish(self, request, queryset):
