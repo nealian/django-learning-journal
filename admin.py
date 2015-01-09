@@ -12,9 +12,6 @@ class TagAdmin(admin.ModelAdmin):
     exclude = ('entries',)
 
 class EntryAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Entry fields', {'fields': ['title','contents']}),
-    ]
     inlines = [
         TagInline,
     ]
@@ -23,12 +20,15 @@ class EntryAdmin(admin.ModelAdmin):
     search_fields = ['title']
     date_hierarchy = 'pub_date'
     actions = ['entry_publish', 'entry_unpublish']
+    readonly_fields = ('pub_date', 'mod_date',)
 
     def get_form(self, request, obj=None, **kwargs):
+        kwargs['fieldsets'] = (
+            ('Entry fields',    {'fields': ['title','contents']}),
+            ('Important dates', {'fields': ['pub_date', 'mod_date']}),
+        )
         if request.user.has_perm('journal.entry_publish'):
-            kwargs['fieldsets'] += [('Publishing',   {'fields': ['public']}),]
-        else:
-            kwargs['exclude'] = ['public']
+            kwargs['fieldsets'] += (('Publishing', {'fields': ['public']}),)
         return super(EntryAdmin, self).get_form(request, obj, **kwargs)
  
     def get_actions(self, request):
