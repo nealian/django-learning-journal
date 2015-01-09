@@ -24,7 +24,7 @@ class EntryAdmin(admin.ModelAdmin):
         (None,             {'fields': ('title','contents',)}),
         ('Post meta-info', {'fields': (('pub_date', 'author',), ('mod_date', 'modifier',),), 'classes': ('collapse',)}),
     )
-    readonly_fields = ('pub_date', 'mod_date',)
+    readonly_fields = ('pub_date', 'mod_date', 'author', 'modifier',)
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = super(EntryAdmin, self).get_fieldsets(request, obj)
