@@ -40,7 +40,9 @@ class EntryAdmin(admin.ModelAdmin):
         return actions
 
     def entry_publish(self, request, queryset):
-        queryset.update(public=True)
+        rows_updated = queryset.update(public=True)
+        message_bit = '1 entry was' if rows_updated == 1 else "%s stories were" % rows_updated
+        self.message_user(request, "%s successfully marked public." % message_bit)
     entry_publish.short_description = "Publish selected entries"
 
     def entry_unpublish(self, request, queryset):
