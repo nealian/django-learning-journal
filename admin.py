@@ -31,7 +31,7 @@ class EntryAdmin(admin.ModelAdmin):
                 kwargs['exclude'] += ['Publishing']
             else:
                 kwargs['exclude'] = ['Publishing']
-        return super(admin.ModelAdmin, self).get_form(request, obj, **kwargs)
+        return super(EntryAdmin, self).get_form(request, obj, **kwargs)
  
     def get_actions(self, request):
         actions = super(EntryAdmin, self).get_actions(request)
