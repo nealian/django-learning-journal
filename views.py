@@ -44,6 +44,7 @@ def entry_detail(request, entry_id):
     return render(request, 'journal/entry_detail.html',
                   dict(common_params.items() + {
                       'entry': entry,
+                      'nobanner': True,
                   }.items()))
 
 def tag_detail(request, tag_id):

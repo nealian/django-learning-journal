@@ -42,7 +42,8 @@ h4, h5, h6
 h5, h6
 { font: normal 95% Arial, Helvetica, sans-serif;
   color: #888;
-  padding-bottom: 15px;}
+  padding-bottom: 15px;
+  padding-left: 2em;}
 
 a
 { color: #FFF;
